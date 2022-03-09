@@ -7,12 +7,13 @@ const formatDescription = (description: string): string => {
 
 interface ProjectCardProps {
     project: Project;
+    onEdit: (project: Project) => void;
 }
 
-const ProjectCard = ( {project}: ProjectCardProps ) => {
+const ProjectCard = ( {project, onEdit}: ProjectCardProps ) => {
 
   const handleEditClick = ( projectBeingEdited: Project ) => {
-    console.log(projectBeingEdited)
+    onEdit(projectBeingEdited);
   }
   return (
     <div className="card">
