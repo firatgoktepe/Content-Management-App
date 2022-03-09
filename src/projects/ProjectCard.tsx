@@ -1,7 +1,7 @@
 import React from 'react'
 import { Project } from './Project'
 
-const formatDescription = ( description: string): string => {
+const formatDescription = (description: string): string => {
     return description.substring(0, 60) + '...'
 }
 
@@ -10,6 +10,10 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ( {project}: ProjectCardProps ) => {
+
+  const handleEditClick = ( projectBeingEdited: Project ) => {
+    console.log(projectBeingEdited)
+  }
   return (
     <div className="card">
          <img src={project.imageUrl} alt={project.name} />
@@ -19,6 +23,12 @@ const ProjectCard = ( {project}: ProjectCardProps ) => {
             </h5>
             <p>{formatDescription(project.description)}</p>
             <p>Budget : {project.budget.toLocaleString()}</p>
+            <button className="bordered" 
+            onClick={() => handleEditClick(project)}
+            >
+                <span className="icon-edit"></span>
+                Edit
+            </button>
          </section>
      </div>
   )
