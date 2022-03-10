@@ -78,10 +78,17 @@ const ProjectsPage = () => {
 
   
   const saveProject = (project: Project) => {
-    let updateProjects = projects.map((p:Project) => {
-      return p.id === project.id ? project : p
-    }) 
-    setProjects(updateProjects)
+    projectAPI
+      .put(project)
+      .then( (updatedProject) => {
+        let updatedProjects = projects.map( (p: Project) => {
+          return p.id === project.id ? new Project(updatedProject) : p
+        } )
+        setProjects(updatedProjects)
+      } )
+      .catch( (e) => {
+        setError(e.message)
+      })
   }
 
   return (
