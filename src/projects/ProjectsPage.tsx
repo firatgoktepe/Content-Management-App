@@ -7,27 +7,32 @@ const ProjectsPage = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string>("")
+  const [currentPage, setCurrentPage] = useState(1)
 
-  // Approach 1: using async await
-  useEffect( () => {
-    async function loadProjects() {
-      setLoading(true)
-      try {
-        const data = await projectAPI.get(1)
-        setError('')
-        setProjects(data)
-      } catch (e) {
-        if (e instanceof Error) {
-          setError(e.message)
-        }
-      } finally {
-        setLoading(false)
-      }
-    }
+  const handleMoreClick = () => {
+      setCurrentPage((currentPage) => currentPage + 1)
+  }
 
-    loadProjects()
-  },[])
 
+      // // Approach 1: using async await
+  // useEffect( () => {
+  //   async function loadProjects() {
+  //     setLoading(true)
+  //     try {
+  //       const data = await projectAPI.get(1)
+  //       setError('')
+  //       setProjects(data)
+  //     } catch (e) {
+  //       if (e instanceof Error) {
+  //         setError(e.message)
+  //       }
+  //     } finally {
+  //       setLoading(false)
+  //     }
+  //   }
+
+  //   loadProjects()
+  // },[])
 
   // Approach 2: using promise then
 //  useEffect(() => {
@@ -44,6 +49,31 @@ const ProjectsPage = () => {
 //        setError(e.message);
 //      });
 //  }, []);
+
+
+  // Prefered using async await
+  useEffect( () => {
+    async function loadProjects() {
+      setLoading(true)
+      try {
+        const data = await projectAPI.get(currentPage)
+        setError('')
+        if (currentPage === 1) {
+          setProjects(data)
+        } else {
+          setProjects( (projects) => [...projects, ...data] )
+        }
+      } catch (e) {
+        if (e instanceof Error) {
+          setError(e.message)
+        }
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadProjects()
+  },[currentPage])
 
 
   
@@ -72,6 +102,17 @@ const ProjectsPage = () => {
         )} 
 
         <ProjectList projects={projects} onSave={saveProject} />
+
+        { !loading && !error && (
+          <div className="row">
+            <div className="col-sm-12">
+                <div className="button-group fluid">
+                  <button className="button default" onClick={handleMoreClick}>More...
+                  </button>
+                </div>
+            </div>
+          </div>
+        )}
 
         {loading && (
           <div className="center-page">
