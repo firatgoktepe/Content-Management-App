@@ -1,16 +1,18 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import ProjectsPage from './projects/ProjectsPage';
 import HomePage from './home/HomePage';
+import ProjectPage from './projects/ProjectPage';
 
 function App() {
   return (
     <Router>
+      <>
       <header className="sticky">
         <span className="logo"> 
-          <img src="assets/logo-3.svg" alt="logo" width="50" height="100" />
+          <img src="/assets/logo-3.svg" alt="logo" width="50" height="100" />
         </span>
         <NavLink to="/" className="button rounded">
           <span className="icon-home"></span>
@@ -22,11 +24,13 @@ function App() {
         </NavLink>
       </header>
       <div className="container">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/projects" element={<ProjectsPage />} />
-        </Routes>
+        <Switch>
+          <Route path="/" exact component={HomePage} />
+          <Route path="/projects" component={ProjectsPage} />
+          <Route path="/projects/:id" component={ProjectPage} />
+        </Switch>
       </div>
+      </>
     </Router>  
   );
 }

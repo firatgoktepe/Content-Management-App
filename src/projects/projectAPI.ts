@@ -74,6 +74,17 @@ const projectAPI = {
             'There was an error updating the project! Please try again later.'
         )
     } )
+  },
+  find(id: number) {
+    return fetch(`${url}/${id}`)
+    .then(checkStatus)
+    .then(parseJSON)
+    .catch( (error: TypeError) => {
+        console.log('log client error: ', error)
+        throw new Error(
+            'There was an error retrieving the project! Please try again later.'
+        )
+    } )
   }
 }
 
