@@ -62,7 +62,7 @@ export type ProjectActionTypes =
   | SaveProjectFailure
   | DeleteProjectRequest
   | DeleteProjectSuccess
-  | DeleteProjectFailure;
+  | DeleteProjectFailure
 
 export interface ProjectState {
   loading: boolean;
