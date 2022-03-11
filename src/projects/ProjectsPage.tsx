@@ -1,16 +1,21 @@
-import React, {useState, useEffect} from 'react'
-import { projectAPI } from './projectAPI'
+import React, { useEffect } from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import { AppState } from '../state'
+import { loadProjects } from './state/projectActions';
 import ProjectList from './ProjectList';
-import {Project} from './Project'
+
 
 const ProjectsPage = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string>("")
-  const [currentPage, setCurrentPage] = useState(1)
+  
+  const loading = useSelector( (appState: AppState) => appState.projectState.loading)
+  const projects = useSelector( (appState: AppState) => appState.projectState.projects)
+  const error = useSelector( (appState: AppState) => appState.projectState.error)
+  const currentPage = useSelector( (appState: AppState) => appState.projectState.page)
+  const dispatch = useDispatch()
+
 
   const handleMoreClick = () => {
-      setCurrentPage((currentPage) => currentPage + 1)
+      dispatch(loadProjects(currentPage + 1))
   }
 
 
@@ -50,46 +55,10 @@ const ProjectsPage = () => {
 //      });
 //  }, []);
 
-
   // Prefered using async await
   useEffect( () => {
-    async function loadProjects() {
-      setLoading(true)
-      try {
-        const data = await projectAPI.get(currentPage)
-        setError('')
-        if (currentPage === 1) {
-          setProjects(data)
-        } else {
-          setProjects( (projects) => [...projects, ...data] )
-        }
-      } catch (e) {
-        if (e instanceof Error) {
-          setError(e.message)
-        }
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadProjects()
-  },[currentPage])
-
-
-  
-  const saveProject = (project: Project) => {
-    projectAPI
-      .put(project)
-      .then( (updatedProject) => {
-        let updatedProjects = projects.map( (p: Project) => {
-          return p.id === project.id ? new Project(updatedProject) : p
-        } )
-        setProjects(updatedProjects)
-      } )
-      .catch( (e) => {
-        setError(e.message)
-      })
-  }
+     dispatch(loadProjects(1))
+  },[dispatch])
 
   return (
      <>
@@ -108,7 +77,7 @@ const ProjectsPage = () => {
           </div>
         )} 
 
-        <ProjectList projects={projects} onSave={saveProject} />
+        <ProjectList projects={projects} />
 
         { !loading && !error && (
           <div className="row">

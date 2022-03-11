@@ -3,11 +3,14 @@ import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-do
 import logo from './logo.svg';
 import './App.css';
 import ProjectsPage from './projects/ProjectsPage';
+import { Provider } from 'react-redux'
+import { store } from './state'
 import HomePage from './home/HomePage';
 import ProjectPage from './projects/ProjectPage';
 
 function App() {
   return (
+  <Provider store={store}>
     <Router>
       <>
       <header className="sticky">
@@ -31,7 +34,8 @@ function App() {
         </Switch>
       </div>
       </>
-    </Router>  
+    </Router>
+  </Provider>      
   );
 }
 
