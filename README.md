@@ -1,6 +1,10 @@
 # Content Management App
 
-A content management app built with React, Typescript and Redux
+A content management app
+
+- Front-end: React, Typescript and Redux
+- Back-end: An API(db.json) with local server built by "json-server" library
+
 
 ## Screenshot Video
 
