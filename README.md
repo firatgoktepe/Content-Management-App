@@ -2,7 +2,7 @@
 
 A content management app built with React, Typescript and Redux
 
-## Screen Video
+## Screenshot Video
 
 https://user-images.githubusercontent.com/47864126/157871497-7ac5a751-f869-4b80-8671-8635a0c81d19.mp4
 
