@@ -5,9 +5,22 @@ import {
     waitForElementToBeRemoved 
 } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
+import { MOCK_PROJECTS } from '../MockProjects'
 import ProjectsPage from '../ProjectsPage'
 import { Provider } from 'react-redux'
 import { store } from '../../state'
+import { rest } from 'msw'
+import { setupServer } from 'msw/node'
+import { url as projectsUrl } from '../projectAPI'
+
+// declare which API requests to mock
+const server = setupServer(
+    // capture GET http://localhost:4000/projects requests
+    rest.get(projectsUrl, (req, res, ctx) => {
+        // respond using a mocked JSON body
+        return res(ctx.json(MOCK_PROJECTS))
+    })
+)
 
 describe('<ProjectsPage/>', () => {
     function renderComponent() {
@@ -19,6 +32,11 @@ describe('<ProjectsPage/>', () => {
             </Provider>
         )
     }
+
+    beforeAll( () => server.listen() )
+    afterEach( () => server.resetHandlers() )
+    afterAll( () => server.close() )
+
     test('should render without crashing', () => {
         renderComponent()
         expect(screen).toBeDefined()
@@ -26,5 +44,9 @@ describe('<ProjectsPage/>', () => {
     test('should display loading', () => {
         renderComponent()
         expect(screen.getByText(/loading/i)).toBeInTheDocument()
+    })
+    test('should display projects', async() => {
+        renderComponent()
+        expect(await screen.findAllByRole('img')).toHaveLength(MOCK_PROJECTS.length)
     })
 })
