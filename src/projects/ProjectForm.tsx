@@ -68,7 +68,7 @@ const ProjectForm = ( { project: InitialProject, onCancel } : ProjectFormProps )
   }
 
   return (
-  <form className="input-group vertical" onSubmit={handleSubmit}>
+  <form aria-label="Edit a Project" name="projectForm" className="input-group vertical" onSubmit={handleSubmit}>
     <label htmlFor="name">Project Name</label>
     <input type="text" name="name" placeholder="enter name" value={project.name} onChange={handleChange} />
 
