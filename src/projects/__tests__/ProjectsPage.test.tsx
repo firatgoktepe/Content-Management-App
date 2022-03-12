@@ -49,4 +49,13 @@ describe('<ProjectsPage/>', () => {
         renderComponent()
         expect(await screen.findAllByRole('img')).toHaveLength(MOCK_PROJECTS.length)
     })
+    test('should display more button', async() => {
+        renderComponent()
+        expect(await screen.findByRole('button', {name: /more/i})).toBeInTheDocument()
+    })
+    test('should display more button with get', async() => {
+        renderComponent()
+        await waitForElementToBeRemoved(() => screen.getByText(/loading/i))
+        expect(await screen.getByRole('button', {name: /more/i})).toBeInTheDocument()
+    })
 })
