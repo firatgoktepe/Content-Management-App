@@ -23,4 +23,8 @@ describe('<ProjectsPage/>', () => {
         renderComponent()
         expect(screen).toBeDefined()
     })
+    test('should display loading', () => {
+        renderComponent()
+        expect(screen.getByText(/loading/i)).toBeInTheDocument()
+    })
 })
