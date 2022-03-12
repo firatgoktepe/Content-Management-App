@@ -58,4 +58,15 @@ describe('<ProjectsPage/>', () => {
         await waitForElementToBeRemoved(() => screen.getByText(/loading/i))
         expect(await screen.getByRole('button', {name: /more/i})).toBeInTheDocument()
     })
+    test('should display custom error on server error', async() => {
+        server.use(
+            rest.get(projectsUrl, (req, res, ctx) => {
+                return res(ctx.status(500, 'Server error'))
+            })
+        )
+        renderComponent()
+
+        expect(
+            await screen.findByText(/an error/i)).toBeInTheDocument()
+    })
 })
