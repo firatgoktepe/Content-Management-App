@@ -3,7 +3,7 @@
 A content management app
 
 - Front-end: React, Typescript and Redux
-- Back-end: An API(db.json) with local server built by "json-server" library
+- Back-end: A sample API(db.json) with local server built by "json-server" library
 - Unit and Integration Testing with "testing-library" and Jest 
 
 
