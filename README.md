@@ -13,7 +13,7 @@ https://user-images.githubusercontent.com/47864126/157871497-7ac5a751-f869-4b80-
 
 ## Available Scripts
 
-In the project directory, you can run:
+After clone (git clone git@github.com:firatgoktepe/Content-Management-App.git) the app into your local, In the project directory, you can run:
 
 ### `npm start`
 
