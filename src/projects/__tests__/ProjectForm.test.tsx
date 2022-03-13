@@ -58,4 +58,18 @@ describe('<ProjectForm />', () => {
         })
     })
 
+    test('should accept input', () => {
+        userEvent.clear(nameTextBox)
+        userEvent.type(nameTextBox, updatedProject.name)
+        expect(nameTextBox).toHaveValue(updatedProject.name)
+
+        userEvent.clear(descriptionTextBox)
+        userEvent.type(descriptionTextBox, updatedProject.description)
+        expect(descriptionTextBox).toHaveValue(updatedProject.description)
+
+        userEvent.clear(budgetTextBox)
+        userEvent.type(budgetTextBox, updatedProject.budget.toString())
+        expect(budgetTextBox).toHaveValue(updatedProject.budget)
+    })
+
 })
