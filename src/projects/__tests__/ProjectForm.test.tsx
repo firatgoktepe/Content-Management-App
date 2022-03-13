@@ -72,4 +72,26 @@ describe('<ProjectForm />', () => {
         expect(budgetTextBox).toHaveValue(updatedProject.budget)
     })
 
+    test('name should display required validation', async() => {
+        userEvent.clear(nameTextBox)
+        expect(screen.getByRole('alert')).toBeInTheDocument()
+    })
+
+    test('name should display min length validation', async() => {
+        userEvent.clear(nameTextBox)
+        userEvent.type(nameTextBox, 'ab')
+        expect(screen.getByRole('alert')).toBeInTheDocument()
+        userEvent.type(nameTextBox, 'c')
+        expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+    })
+
+    test('budget should display not 0 validation', async() => {
+        userEvent.clear(budgetTextBox)
+        userEvent.type(budgetTextBox, '0')
+        expect(screen.getByRole('alert')).toBeInTheDocument()
+        userEvent.type(budgetTextBox, '1')
+        expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+    })
+
+
 })
