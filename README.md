@@ -4,7 +4,7 @@ A content management app
 
 - Front-end: React, Typescript and Redux
 - Back-end: A sample API(db.json) with local server built by "json-server" library
-- Unit and Integration Testing with "testing-library" and Jest 
+- Unit and Integration Tests using "testing-library" and Jest 
 
 
 ## Screenshot Video
